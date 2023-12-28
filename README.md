@@ -12,7 +12,7 @@ Documentation
 
 ```text
 Usage:  
-  python seplos2mqtt.py 
+  python seplos3mqtt.py 
 
 INI file:  
 [seplos3mqtt]
