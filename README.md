@@ -5,7 +5,7 @@ Seplos3MQTT
 Python script to connect a battery pack using BMS Seplos Version 3 to MQTT
 
 Connect a USB to RS485 to any RS485 free port in your Seplos Pack.
-MQTT has provides Home Assistant auto discovery
+MQTT also provides Home Assistant auto discovery
 
 Documentation
 -------------
