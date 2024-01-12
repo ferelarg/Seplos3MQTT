@@ -15,6 +15,7 @@ import logging
 import serial
 import configparser
 import paho.mqtt.client as mqtt
+import os
 
 # --------------------------------------------------------------------------- #
 # configure the logging system
@@ -469,6 +470,53 @@ def printHelp():
     print("")
 
 
+# --------------------------------------------------------------------------- #
+# get variable config from environment or config file
+# --------------------------------------------------------------------------- #
+
+def get_config_variable(name,default='mandatory'):
+   try:
+      # try to get variable from environment
+      value = os.getenv(name)
+      if value is not None:
+         return value
+
+      # the environment variable uis not defined, find in file .ini
+      config = configparser.ConfigParser()
+      config.read('/Seplos3MQTT/seplos3mqtt.ini')
+      if not config.sections():  # Verificar si se cargaron secciones
+            raise FileNotFoundError()
+
+      return config['seplos3mqtt'][name]
+
+   except configparser.NoSectionError as e:
+      if default != 'mandatory':
+         return default
+      else:
+         print(f'Error: Section [seplos3mqtt] not found in the file seplos3mqtt.ini for variable {name}, exception: {e}')
+         printHelp()
+         sys.exit()
+   except configparser.NoOptionError as e:
+       if default != 'mandatory':
+          return default
+       else:
+          print(f'Error: Parameter {name} not found in environment variable or in the file seplos3mqtt.ini Details: {e}')
+          printHelp()
+          sys.exit()
+   except FileNotFoundError as e:
+        if default != 'mandatory':
+           return default
+        else:
+           print(f'Error: seplos3mqtt.ini was not found or environment variable {name} not defined.')
+           printHelp()
+           sys.exit()
+   except Exception as e:
+        print(f'Unexpected error: {e}')
+        printHelp()
+        sys.exit()
+
+
+
 
 # --------------------------------------------------------------------------- #
 # main routine
@@ -476,31 +524,20 @@ def printHelp():
 if __name__ == "__main__":
     print(" ")
 
-    config = configparser.ConfigParser()
 
     try:
-        config.read('seplos3mqtt.ini')
-        port = config.get('seplos3mqtt', 'serial')
-        mqtt_server = config.get('seplos3mqtt', 'mqtt_server')
-        mqtt_port = int(config.get('seplos3mqtt', 'mqtt_port'))
-        mqtt_user = config.get('seplos3mqtt', 'mqtt_user')
-        mqtt_pass = config.get('seplos3mqtt', 'mqtt_pass')
-        mqtt_prefix = config.get('seplos3mqtt', 'mqtt_prefix')
+        port = get_config_variable('serial')
+        mqtt_server =  get_config_variable('mqtt_server')
+        mqtt_port = int(get_config_variable('mqtt_port',"1883"))
+        mqtt_user = get_config_variable('mqtt_user',"")
+        mqtt_pass = get_config_variable('mqtt_pass',"")
+        mqtt_prefix = get_config_variable('mqtt_prefix',"seplos")
         
 
         with SerialSnooper(port,mqtt_server, mqtt_port, mqtt_user, mqtt_pass) as sniffer:
             while True:
                 data = sniffer.read_raw()
                 sniffer.process_data(data)
-    except configparser.NoSectionError as e:
-        print("Error: Section [seplos3mqtt] not found in the file seplos3mqtt.ini")
-        printHelp()
-    except configparser.NoOptionError as e:
-        print(f'Error: Missing a parameter in the file seplos3mqtt.ini Details: {e}')
-        printHelp()
-    except FileNotFoundError as e:
-        print("Error: seplos3mqtt.ini was not found.")
-        printHelp()
     except Exception as e:
         print(f'Unexpected error: {e}')
         printHelp()
