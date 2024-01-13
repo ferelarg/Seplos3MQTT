@@ -25,7 +25,7 @@ mqtt_prefix = mqtt prefix
 ```
 
 ![Seplos RS485 Pinout](img/rs485pinout.jpeg)
-![Seplos Wiring](img/seplos_wiring.jpg)
+![Seplos Wiring](img/seplos_wiring.jpeg)
 
 
 Project Informations
