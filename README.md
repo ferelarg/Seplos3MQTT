@@ -24,6 +24,9 @@ mqtt_pass = mqtt password
 mqtt_prefix = mqtt prefix
 ```
 
+![Seplos RS485 Pinout](img/rs485pinout.jpeg)
+
+
 Project Informations
 --------------------
 
