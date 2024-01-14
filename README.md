@@ -24,6 +24,14 @@ mqtt_pass = mqtt password
 mqtt_prefix = mqtt prefix
 ```
 
+How-to video - In Spanish
+-------------------------
+
+[![BMS Seplos V3.0, Integración de datos en domótica](http://img.youtube.com/vi/mwh8dXmQ8fU/0.jpg)](http://www.youtube.com/watch?v=mwh8dXmQ8fU "BMS Seplos V3.0, Integración de datos en domótica")
+
+Pinout and Wiring
+-----------------
+
 ![Seplos RS485 Pinout](img/rs485pinout.jpeg)
 
 ![Seplos Wiring](img/seplos_wiring.jpeg)
