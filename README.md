@@ -7,6 +7,18 @@ Python script to connect a battery pack using BMS Seplos Version 3 to MQTT
 Connect a USB to RS485 to any RS485 free port in your Seplos Pack.
 MQTT also provides Home Assistant auto discovery
 
+
+Quick start
+-------------
+
+Adapt the variables in the docker-compose.yaml. Then build the image and start with docker-compose:
+
+```text
+sudo docker build -t seplos3mqtt .
+sudo docker-compose up -d
+```
+
+
 Documentation
 -------------
 
