@@ -59,7 +59,7 @@ class SerialSnooper:
         self.connection = serial.Serial(port=port, baudrate=19200, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, timeout=0.001750)
         log.debug(self.connection)
        
-        self.mqtt_hass = mqtt.Client()
+        self.mqtt_hass = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
         self.mqtt_hass.username_pw_set(username=mqtt_user, password=mqtt_pass)
         try:
             log.info(f"Opening MQTT connection, server: {mqtt_server}\tport: {mqtt_port}")
