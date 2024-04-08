@@ -1,0 +1,12 @@
+version: "3"
+services:
+  homeassistant:
+    container_name: seplos
+    image: seplosmqtt
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    environment:
+      - serial=/dev/ttyUSB0
+      - mqtt_server=192.168.111.1
+      - mqtt_user=
+      - mqtt_pass=
